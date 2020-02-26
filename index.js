@@ -223,11 +223,10 @@ function firstNamesAllCaps(runners) {
  * The runners in the array appear in the same order they appear in the `runners` array.
 */
 function getRunnersByTShirtSize(runners, tShirtSize) {
-  runners.filter(function(items, newArr) {
-  newArr.push(`${items.shirt_size}`)
-});
-
-return(runners);
+  const runnerSize = runners.filter(function(items) {
+    return items.shirt_size == tShirtSize
+  });
+  return runnerSize;
 }
 
 /**
@@ -241,7 +240,10 @@ return(runners);
  * @returns a number which is the sum of the donations by all runners.
 */
 function tallyUpDonations(runners) {
-  /* CODE HERE */
+  const total = runners.reduce(function(accu, item){
+    return accu + item.donation;
+  }, 0);
+  return total;
 }
 
 /////////////// CLOSURES ///////////////
@@ -262,10 +264,15 @@ function tallyUpDonations(runners) {
 */
 function counterMaker() {
   // BROKEN CODE STARTS
-  const count = 0;
-  function counter() {
-    ++count
+  let count = -1;
+  return function counter() {
+    if (count >= 0){
+      count + 1;  
+    }
+    
+    return ++count
   }
+  
   // BROKEN CODE ENDS
 }
 
@@ -289,8 +296,15 @@ function counterMaker() {
  * counter() // should return 0
  * etc
 */
-function counterMakerWithLimit(/* CODE HERE */) {
-  /* CODE HERE */
+function counterMakerWithLimit(maxVar) {
+  let count = -1;
+
+  return function(counter){
+    if (count === maxVar) {
+      count = -1;
+    }
+      return ++count;
+  }
 }
 
 /////////////// END OF CHALLENGE ///////////////
